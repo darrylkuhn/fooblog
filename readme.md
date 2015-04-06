@@ -1,23 +1,20 @@
-## Laravel PHP Framework
+## FooBlog Demo Application
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/downloads.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+This application exists to show how you can use postman/newman to run automated tests and collect code coverage. To get started make sure you have [composer](https://getcomposer.org) installed and update the database config to point to a working database. Then install the app and migrate and seed the database
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+```shell
+    composer install
+    ./artisan migrate --seed
+```
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+Next configure your web server to serve the project at api.fooblog.loc and assuming your running this on a local server add the following hosts entry to your [hosts file](http://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/).
 
-## Official Documentation
+```
+127.0.0.1  api.fooblog.loc
+```
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+Next use [Postman](https://www.getpostman.com/) and import the collection and environment located in /postman or use [newman](https://www.getpostman.com/docs/newman_intro) and run it on the command line:
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+```shell
+    newman --insecure  -e postman/build.json -c postman/collection.json
+```
