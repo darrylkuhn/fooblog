@@ -3,6 +3,7 @@
 This application exists to show how you can use postman/newman to run automated tests and collect code coverage. To get started make sure you have [composer](https://getcomposer.org) installed and update the database config to point to a working database. Then install the app and migrate and seed the database
 
 ```shell
+    cp .env.example .env
     composer install
     ./artisan migrate --seed
 ```
@@ -17,4 +18,14 @@ Next use [Postman](https://www.getpostman.com/) and import the collection and en
 
 ```shell
     newman --insecure  -e postman/build.json -c postman/collection.json
+```
+
+To collect and write coverage use the following example:
+```shell
+./artisan testing:coverage collect
+vendor/bin/phpunit --log-junit testresults/phpunit/phpunit.xml -c phpunit.xml
+mkdir -p testresults/newman/
+newman -c postman/collection.json -e postman/build.json -o testresults/newman/build.json --noColor
+./artisan testing:coverage write
+./artisan testing:merge-results
 ```
