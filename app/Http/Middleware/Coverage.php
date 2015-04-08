@@ -8,7 +8,6 @@ use PHP_CodeCoverage;
 
 class Coverage
 {
-
     /**
      * Checks if we have code coverage enabled and if so starts collection 
      * process.
@@ -34,18 +33,27 @@ class Coverage
 
         if ( Cache::has($recordCoverageKey) ) {
 
-            // We have to paths at this point
-            // 1) We're already collecting data - in which case there is
-            //    already a code coverage object in cache we can use
-            // 2) This is the first request since collection has been
+            // We have three paths at this point
+            // 1) We're already collecting service coverage - in which case
+            //    there is already a code coverage object in cache we can use
+            // 2) This is the first request since service coverage has been
+            //    enabled and there is coverage data from another process we
+            //    want to pick up
+            // 3) This is the first request since collection has been
             //    enabled and we need to stand up a new coverage object
             if ( Cache::has($coverageKey) ) {
                 $coverage = Cache::get($coverageKey);
             }
+            elseif( self::hasCoverageFile() )
+            {
+                // Load in the php coverage object saved by the php unit
+                // process that ran previously
+                include self::coverageFile();
+            }
             else
             {
-                // Explicitly white list the files you're interested in 
-                // collecting coverage details about. Start by 
+                // Explicitly white list the files you're interested in
+                // collecting coverage details about. Start by
                 // blacklisting everything
                 $filter = new PHP_CodeCoverage_Filter;
                 $filter->addDirectoryToBlacklist(base_path() . '/');
@@ -78,6 +86,16 @@ class Coverage
         }
 
         return $next($request);
+    }
+
+    public static function hasCoverageFile()
+    {
+        return file_exists( self::coverageFile() );
+    }
+
+    public static function coverageFile()
+    {
+        return base_path().'/testresults/phpunit/coverage.php';
     }
 
 }

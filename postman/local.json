@@ -1,6 +1,6 @@
 {
 	"id": "b61eae62-ec36-732d-0c52-d6ece4cb0c5a",
-	"name": "FooBlog",
+	"name": "FooBlog (Local)",
 	"values": [
 		{
 			"key": "api-server",

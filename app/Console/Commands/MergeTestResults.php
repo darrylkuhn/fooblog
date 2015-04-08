@@ -93,7 +93,7 @@ class MergeTestResults extends Command
     protected function getArguments()
     {
         return [ 
-            [ 'newman', InputArgument::OPTIONAL, 'The source newman output JSON', 'testresults/newman/build.json' ],
+            [ 'newman', InputArgument::OPTIONAL, 'The source newman output JSON', 'testresults/newman/result.json' ],
             [ 'phpunit', InputArgument::OPTIONAL, 'The source phpunit xml result', 'testresults/phpunit/phpunit.xml' ],
             [ 'destination', InputArgument::OPTIONAL, 'The target phpunit xml file to merge into', 'testresults/phpunit/merged.xml' ],
         ];
